@@ -70,7 +70,37 @@
         
         <br>
 
-        <p>The second graph gives us a bit more information regarding this as we take into account the demograhic of various countries</p>
+        <!-- Visualisation 2 -->
+        <div class="charts graph-1">
+            <p>For the second graph, we calculate the percentage increase in confirmed cases since the previous day country-wise.</p>
+            
+            <div class="row">
+                <div class="col-sm-4">
+                    <button type="button" id="country-list-btn2">Add more countries</button>
+                </div>
+
+                <div class="col-sm-4">
+                <div id="add-country2">
+                    <label for="cars">Country:</label>
+                    
+                </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <button type="button" id="add-country-btn2">Apply</button>
+                </div>
+
+            </div>
+
+            <div style="height: 600px">
+                <canvas id="chart2"></canvas>
+            </div>
+            <br><br>
+            <p>The percentage increase gives better insight on how successful the countries have been in containing the infection.</p>
+            <p>It is calculated as <i>(Confirmed Cases Today - Confirmed Cases Yesterday)*100/Confirmed Cases Yesterday</i></p>
+        </div>
+        
+        <br>
 
     </div>
 

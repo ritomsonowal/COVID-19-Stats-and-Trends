@@ -23,7 +23,7 @@
     padding: 10px 0px;
 }
 
-#add-country {
+#add-country, #add-country-btn, #add-country2, #add-country-btn2 {
     display: none;
 }
 

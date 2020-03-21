@@ -3,6 +3,7 @@ var data;
 
 var url = "https://pomber.github.io/covid19/timeseries.json"; 
 var addedCountries = ["China", "India", "Italy"];
+var addedbarCountries = ["China", "India", "Italy", "United Kingdom", "US", "Spain"];
 
 $(document).ready(function () {
 
@@ -20,20 +21,42 @@ $(document).ready(function () {
     console.log(data);
 
     // Render Chart 1
-    chart1 = renderChart1(getChartData(data, "China"));
+    chart1 = renderChart1(getlineData(data, "China"));
     
-    addData(chart1, data, "India");
-    addData(chart1, data, "Italy");
+    addLineData(chart1, data, "India");
+    addLineData(chart1, data, "Italy");
 
     $("#country-list-btn").click(function(){
         $("#add-country").toggle();
+        $("#add-country-btn").toggle();
     });
 
     addCountryList(data);
+    addCountryList2(data);
 
     $("#add-country-btn").click(function(){
-        addData(chart1, data, $('#country-list').val());
+        addLineData(chart1, data, $('#country-list').val());
         console.log("Added new country!");
     });
+
+    // Render Chart 2
+    var barData = []
+    console.log(addedbarCountries);
+    for (var x in addedbarCountries) {
+        barData.push(getbarData(data, addedbarCountries[x]));
+    }
+    console.log(barData);
+    chart2 = renderChart2(addedbarCountries, barData);
+
+    $("#country-list-btn2").click(function(){
+        $("#add-country2").toggle();
+        $("#add-country-btn2").toggle();
+    });
+
+    $("#add-country-btn2").click(function(){
+        addbarData(chart2, data, $('#country-list2').val());
+        console.log("Added new country!");
+    });
+
 });
 

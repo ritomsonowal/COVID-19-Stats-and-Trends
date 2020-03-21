@@ -1,6 +1,6 @@
-let colors = ['rgb(216, 36, 8, 0.7)','rgb(17, 145, 224, 0.7)', 'rgb(224, 221, 23, 0.7)'];
+let colors = ['rgb(216, 36, 8, 0.7)','rgb(230, 171, 26)','rgb(17, 145, 224, 0.7)', 'rgb(224, 221, 23, 0.7)'];
 var i = 0;
-var n = 3;
+var n = 4;
 
 function getLabels(data, country) {
     var labels = [];
@@ -10,7 +10,7 @@ function getLabels(data, country) {
     data[country].forEach(({ date, confirmed, recovered, deaths }) =>
     labels.push(date));
 
-    return labels;
+    return labels.slice(-27,-1);;
 }
 
 function getConfirmed(data, country) {
@@ -19,7 +19,7 @@ function getConfirmed(data, country) {
     data[country].forEach(({ date, confirmed, recovered, deaths }) =>
     dataset.push(confirmed));
 
-    return dataset;
+    return dataset.slice(-27,-1);
 }
 
 function getCountries(data) {
@@ -28,12 +28,13 @@ function getCountries(data) {
     for (var key of Object.keys(data)) {
         countries.push(key);
     }
-
-    return countries;
+    console.log(countries.sort());
+    console.log("adfadsf");
+    return countries.sort();
 }
 
-function getChartData(data, country) {
-    var chartData = {
+function getlineData(data, country) {
+    var lineData = {
         labels: getLabels(data, country),
         datasets: [{
             label: country,
@@ -47,17 +48,17 @@ function getChartData(data, country) {
         };
         
     i = (i+1)%n;
-    console.log(chartData);
-    return chartData;
+    console.log(lineData);
+    return lineData;
 }
 
 
-function renderChart1(chartData) {
+function renderChart1(lineData) {
     var ctx = document.getElementById('chart1');   
 
     var myChart = new Chart(ctx, {
         type: 'line',
-        data: chartData,
+        data: lineData,
         options: {
             title: {
                 display: true,
@@ -95,7 +96,7 @@ function renderChart1(chartData) {
 }
 
 
-function addData(chart, jsonData, country) {
+function addLineData(chart, jsonData, country) {
     var newDataset = {
         label: country,
         data: getConfirmed(jsonData, country),
@@ -117,13 +118,107 @@ function addData(chart, jsonData, country) {
 
 function addCountryList(data) {
 
+    var countryList = getCountries(data);
+
     var select = $('<select id="country-list"/>');
 
-    for(var val in data) {
-        $('<option />', {value: val, text: val}).appendTo(select);
+    for(var val in countryList) {
+        $('<option />', {value: countryList[val], text: countryList[val]}).appendTo(select);
     }
     
     select.appendTo('#add-country');
 
+}
 
+function getbarData(data, country) {
+    var confirmedCases = getConfirmed(data, country);
+
+    var perCases = (confirmedCases[confirmedCases.length-1]-confirmedCases[confirmedCases.length-2])*100/confirmedCases[confirmedCases.length-2] ;
+    
+    console.log(perCases);
+    
+    return perCases;
+}
+
+function renderChart2(countries, barData) {
+    var ctx = document.getElementById('chart2');   
+
+    var myChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: countries,
+            datasets: [{
+                barPercentage: 1,
+                barThickness: 30,
+                label: 'Percentage Increase in Confirmed Cases',
+                data: barData,
+                borderWidth: 1,
+                backgroundColor: colors[0]
+                }]
+            },
+        options: {
+            tooltips: {
+                mode: 'nearest'
+            },
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Percentage increase in confirmed cases Graph'
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    left: 20,
+                    right: 20,
+                    top: 0,
+                    bottom: 0
+                }
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        suggestedMax: 10
+                    },
+                    gridLines: {
+                        offsetGridLines: false
+                    }
+                }]
+            }
+        }
+    }); 
+
+    setTimeout(function() { myChart.update(); },1000); 
+
+    return myChart;
+}
+
+function addCountryList2(data) {
+
+    var countryList = getCountries(data);
+
+    var select = $('<select id="country-list2"/>');
+
+    for(var val in countryList) {
+        $('<option />', {value: countryList[val], text: countryList[val]}).appendTo(select);
+    }
+    
+    select.appendTo('#add-country2');
+
+}
+
+function addbarData(chart, jsonData, country) {
+    var newDataset = getbarData(jsonData, country);
+
+    chart.data.labels.push(country);
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data.push(newDataset);
+    });
+    chart.update();
+    // console.log(newDataset);
+
+    console.log("Updated!");
 }
