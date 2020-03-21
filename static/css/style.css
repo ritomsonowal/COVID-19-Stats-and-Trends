@@ -8,6 +8,10 @@
     text-align: center;
 }
 
+.heading i {
+    color: black;
+}
+
 .heading h1 {
     font-size: 50px;
     font-weight: 680;
