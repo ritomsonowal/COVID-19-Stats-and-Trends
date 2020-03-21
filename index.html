@@ -13,6 +13,7 @@
 
     <!-- jQuery -->
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/chart.js"></script>
     <script type="text/javascript" src="js/init.js"></script>
 
     <!-- Bootstrap Links -->
@@ -39,12 +40,37 @@
         <hr>
 
         <!-- Visualisation 1 -->
-        <div class="graph-1">
+        <div class="charts graph-1">
             <p>Starting with the simplest visualisation...a <i>confirmed cases</i> vs <i>time</i> graph.</p>
+            
+            <div class="row">
+                <div class="col-sm-4">
+                    <button type="button" id="country-list-btn">Add more countries</button>
+                </div>
+
+                <div class="col-sm-4">
+                <div id="add-country">
+                    <label for="cars">Country:</label>
+                    
+                </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <button type="button" id="add-country-btn">Apply</button>
+                </div>
+
+            </div>
+            
             <div style="height: 600px">
                 <canvas id="chart1"></canvas>
-              </div>
+            </div>
+            <br><br>
+            <p>This particular graph however is of little to no help as it hardly takes into account other factors such as demographic of a country or its area.</p>
         </div>
+        
+        <br>
+
+        <p>The second graph gives us a bit more information regarding this as we take into account the demograhic of various countries</p>
 
     </div>
 

@@ -18,3 +18,19 @@
     font-size: 27px;
     font-weight: 400;
 }
+
+.charts {
+    padding: 10px 0px;
+}
+
+#add-country {
+    display: none;
+}
+
+.row {
+    padding: 0px 0px;
+}
+
+div {
+    padding: 5px;
+}
