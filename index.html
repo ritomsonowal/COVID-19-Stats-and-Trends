@@ -8,6 +8,13 @@
     <!-- CSS -->
     <link rel="stylesheet" href="static/css/style.css">
 
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/init.js"></script>
+
     <!-- Bootstrap Links -->
     
     <!-- Latest compiled and minified CSS -->
@@ -21,8 +28,29 @@
 
 </head>
 <body>
+
     <div class="container">
-        <h2>Hello!</h2>
+
+        <div class="heading">
+            <h1>COVID-19</h1>
+            <h3>STATS AND TRENDS (so far!)</h3>
+        </div>
+
+        <hr>
+
+        <!-- Visualisation 1 -->
+        <div class="graph-1">
+            <p>Starting with the simplest visualisation...a <i>confirmed cases</i> vs <i>time</i> graph.</p>
+            <div style="height: 600px">
+                <canvas id="chart1"></canvas>
+              </div>
+        </div>
+
     </div>
+
+<!-- ChartJS -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
 </body>
 </html>

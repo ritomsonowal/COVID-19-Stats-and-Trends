@@ -1,0 +1,20 @@
+.container {
+    padding: 10px;
+    font-size: 16px;
+}
+
+.heading {
+    font-family: 'Open Sans', sans-serif !important;
+    text-align: center;
+}
+
+.heading h1 {
+    font-size: 50px;
+    font-weight: 680;
+    letter-spacing: 3px;
+}
+
+.heading h3 {
+    font-size: 27px;
+    font-weight: 400;
+}
