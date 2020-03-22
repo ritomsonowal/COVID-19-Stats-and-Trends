@@ -1,7 +1,8 @@
 var jsonData;
 var data;
+var population;
 
-var url = "https://pomber.github.io/covid19/timeseries.json"; 
+var covidURL = "https://pomber.github.io/covid19/timeseries.json"; 
 var addedCountries = ["China", "India", "Italy"];
 var addedbarCountries = ["China", "India", "Italy", "United Kingdom", "US", "Spain"];
 
@@ -12,7 +13,7 @@ $(document).ready(function () {
         'type': "GET",
         'global': false,
         'dataType': 'json',
-        'url': url,
+        'url': covidURL,
         'success': function (jsonData) {
             data = jsonData;
         }

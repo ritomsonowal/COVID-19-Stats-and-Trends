@@ -2,6 +2,23 @@ let colors = ['rgb(216, 36, 8, 0.7)','rgb(230, 171, 26)','rgb(17, 145, 224, 0.7)
 var i = 0;
 var n = 4;
 
+var popURL = "https://restcountries.eu/rest/v2/all?fields=name;nativeName;population";
+var popData;
+
+$(document).ready(function () {
+
+    $.ajax({
+        'async': false,
+        'type': "GET",
+        'global': false,
+        'dataType': 'json',
+        'url': popURL,
+        'success': function (jsonData) {
+            popData = jsonData;
+        }
+    });
+});
+
 function getLabels(data, country) {
     var labels = [];
     // console.log(data);
@@ -22,23 +39,49 @@ function getConfirmed(data, country) {
     return dataset.slice(-27,-1);
 }
 
+function getPopulation(country) {
+    let i=0;
+
+    for (i=0;i<250;i++) {
+        if (popData[i]["name"] == country || popData[i]["nativeName"] == country) {
+            return popData[i]["population"];
+        }
+    } return false;
+}
+
 function getCountries(data) {
     var countries = [];
 
     for (var key of Object.keys(data)) {
         countries.push(key);
     }
-    console.log(countries.sort());
-    console.log("adfadsf");
+    // console.log(countries.sort());
+    // console.log("adfadsf");
     return countries.sort();
 }
 
+function getLineDataset(data, country) {
+    var confirmedCases = getConfirmed(data, country);
+    var population = getPopulation(country);
+    if (population == false) {
+        population = 1;
+        console.log("Could not retrieve population for " + country);
+    }
+    var linedata = [];
+    let i=0;
+
+    for (i=0;i<confirmedCases.length;i++) {
+        linedata.push(confirmedCases[i]/population);
+    } return linedata;
+}
+
 function getlineData(data, country) {
+
     var lineData = {
         labels: getLabels(data, country),
         datasets: [{
             label: country,
-            data: getConfirmed(data, country),
+            data: getLineDataset(data, country),
             borderWidth: 1,
             lineTension: 0,
             order: 0,
@@ -48,7 +91,7 @@ function getlineData(data, country) {
         };
         
     i = (i+1)%n;
-    console.log(lineData);
+    // console.log(lineData);
     return lineData;
 }
 
@@ -62,7 +105,7 @@ function renderChart1(lineData) {
         options: {
             title: {
                 display: true,
-                text: 'Confirmed cases Graph'
+                text: '(Confirmed cases)/Population Graph'
             },
             responsive: true,
             maintainAspectRatio: false,
@@ -83,7 +126,7 @@ function renderChart1(lineData) {
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: "Confirmed Cases"
+                        labelString: "(Confirmed Cases)/Population"
                     }
                 }]
             }
@@ -113,7 +156,7 @@ function addLineData(chart, jsonData, country) {
     chart.update();
     // console.log(newDataset);
 
-    console.log("Updated!");
+    // console.log("Updated!");
 }
 
 function addCountryList(data) {
@@ -135,7 +178,7 @@ function getbarData(data, country) {
 
     var perCases = (confirmedCases[confirmedCases.length-1]-confirmedCases[confirmedCases.length-2])*100/confirmedCases[confirmedCases.length-2] ;
     
-    console.log(perCases);
+    // console.log(perCases);
     
     return perCases;
 }
@@ -220,5 +263,5 @@ function addbarData(chart, jsonData, country) {
     chart.update();
     // console.log(newDataset);
 
-    console.log("Updated!");
+    // console.log("Updated!");
 }
